@@ -1,0 +1,25 @@
+# Testing Framework
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.3.1          # Parallel test execution
+pytest-mock>=3.11.1          # Mocking utilities
+
+# Code Quality & Formatting
+black>=23.7.0                 # Code formatter
+flake8>=6.0.0                # Linting
+mypy>=1.5.0                  # Type checking
+isort>=5.12.0                # Import sorting
+
+# Development Utilities
+ipython>=8.14.0              # Interactive Python shell
+jupyter>=1.0.0               # Jupyter notebooks for problem exploration
+numpy>=1.24.0                # Numerical computing (useful for some problems)
+matplotlib>=3.7.0            # Plotting for algorithm visualization
+
+# Performance & Profiling
+memory-profiler>=0.61.0      # Memory usage profiling
+line-profiler>=4.1.0         # Line-by-line profiling
+
+# Optional: Data Structures & Algorithms Libraries
+networkx>=3.1                # Graph algorithms
+scipy>=1.11.0                # Scientific computing

@@ -1,0 +1,21 @@
+{
+  "name": "leetcode-practice-workspace",
+  "version": "1.0.0",
+  "description": "LeetCode practice problems with solutions and test cases",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:beginner": "jest javascript/beginner/*/",
+    "test:intermediate": "jest javascript/intermediate/*/",
+    "test:advanced": "jest javascript/advanced/*/"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.js",
+      "**/*.test.js"
+    ]
+  }
+}
