@@ -22,9 +22,14 @@ help:
 	@echo "  lint-py      Lint Python code with flake8"
 	@echo "  clean        Clean up build artifacts and cache"
 	@echo ""
-	@echo "Individual Testing:"
-	@echo "  test-js-problem PROBLEM=two-sum  Test specific JS problem"
-	@echo "  test-py-problem PROBLEM=two-sum  Test specific Python problem"
+	@echo "Individual Testing (Consistent Syntax):"
+	@echo "  test-js PROBLEM=two-sum              Test specific JS problem"
+	@echo "  test-py PROBLEM=two-sum              Test specific Python problem" 
+	@echo "  test-js PROBLEM=climbing-stairs      Test individual JS problems"
+	@echo "  test-py PROBLEM=number-of-islands    Works with any difficulty level"
+	@echo ""
+	@echo "Python Status: 35/61 problems implemented (57% complete)"
+	@echo "  ✅ Beginner: 20/20 (100%)    🚧 Intermediate: 12/21 (57%)    🚧 Advanced: 1/20 (5%)"
 
 # Setup targets
 setup-js:
@@ -39,39 +44,42 @@ setup: setup-js setup-py
 
 # Testing targets
 test-js:
-	@echo "🧪 Running JavaScript tests..."
-	npm test
+	@if [ -n "$(PROBLEM)" ]; then \
+		echo "🧪 Testing individual JavaScript problem: $(PROBLEM)"; \
+		npm test $(PROBLEM); \
+	else \
+		echo "🧪 Running all JavaScript tests..."; \
+		npm test; \
+	fi
 
 test-py:
-	@echo "🐍 Running Python tests..."
-	@if [ -d ".venv" ]; then \
-		echo "Using virtual environment..."; \
-		.venv/bin/python -m pytest python/*/test_*.py -v; \
+	@if [ -n "$(PROBLEM)" ]; then \
+		echo "🐍 Testing individual Python problem: $(PROBLEM)"; \
+		if [ -d ".venv" ] && [ -f ".venv/bin/pytest" ]; then \
+			echo "Using virtual environment with pytest..."; \
+			.venv/bin/python -m pytest python/*/$(PROBLEM)/test_*.py -v; \
+		elif python3 -c "import pytest" 2>/dev/null; then \
+			echo "Using system pytest..."; \
+			python3 -m pytest python/*/$(PROBLEM)/test_*.py -v; \
+		else \
+			python3 test_individual.py $(PROBLEM); \
+		fi; \
 	else \
-		echo "No virtual environment found, using system Python..."; \
-		python3 -m pytest python/*/test_*.py -v; \
+		echo "🐍 Running all Python tests..."; \
+		if [ -d ".venv" ] && [ -f ".venv/bin/pytest" ]; then \
+			echo "Using virtual environment with pytest..."; \
+			.venv/bin/python -m pytest python/*/test_*.py -v; \
+		elif python3 -c "import pytest" 2>/dev/null; then \
+			echo "Using system pytest..."; \
+			python3 -m pytest python/*/test_*.py -v; \
+		else \
+			echo "pytest not available, using simple test runner..."; \
+			python3 simple_test.py; \
+		fi; \
 	fi
 
 test: test-js test-py
 
-# Individual problem testing
-test-js-problem:
-	@if [ -z "$(PROBLEM)" ]; then \
-		echo "Usage: make test-js-problem PROBLEM=problem-name"; \
-		exit 1; \
-	fi
-	npm test $(PROBLEM)
-
-test-py-problem:
-	@if [ -z "$(PROBLEM)" ]; then \
-		echo "Usage: make test-py-problem PROBLEM=problem-name"; \
-		exit 1; \
-	fi
-	@if [ -d ".venv" ]; then \
-		.venv/bin/python -m pytest python/*/$(PROBLEM)/test_*.py -v; \
-	else \
-		python3 -m pytest python/*/$(PROBLEM)/test_*.py -v; \
-	fi
 
 # Development targets
 format-py:

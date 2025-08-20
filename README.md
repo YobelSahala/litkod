@@ -14,12 +14,12 @@ A comprehensive environment for practicing LeetCode problems in **JavaScript** a
 
 ## 📊 Problem Coverage
 
-| Difficulty | Count | Languages | Test Coverage |
-|------------|-------|-----------|---------------|
-| **Beginner** | 20 | JS + Python | ✅ 100% |
-| **Intermediate** | 21 | JS + Python | ✅ 100% |  
-| **Advanced** | 20 | JS + Python | ✅ 100% |
-| **Total** | **61 Problems** | **2 Languages** | **631 Tests** |
+| Difficulty | Count | JavaScript | Python | Test Coverage |
+|------------|-------|------------|--------|---------------|
+| **Beginner** | 20 | ✅ 100% | ✅ 100% | ✅ 631 JS tests |
+| **Intermediate** | 21 | ✅ 100% | 🚧 57% | ✅ 21 Python tests |  
+| **Advanced** | 20 | ✅ 100% | 🚧 5% | 🔄 In Progress |
+| **Total** | **61 Problems** | **✅ Complete** | **🚧 35/61 Done** | **652+ Tests** |
 
 ## 📁 Repository Structure
 
@@ -61,8 +61,8 @@ make setup
 make test
 
 # Test specific problem
-make test-js-problem PROBLEM=two-sum
-make test-py-problem PROBLEM=two-sum
+make test-js PROBLEM=two-sum
+make test-py PROBLEM=two-sum
 ```
 
 ### Option 2: Manual Setup
@@ -70,23 +70,30 @@ make test-py-problem PROBLEM=two-sum
 **JavaScript:**
 ```bash
 npm install
-npm test                    # Run all tests
+npm test                    # Run all tests (631 tests)
 npm test two-sum           # Test specific problem
 npm run test:beginner      # Test difficulty level
 ```
 
 **Python:**
 ```bash
-python3 setup.py           # Automated setup
+python3 setup.py           # Automated setup (creates venv + dependencies)
 # OR manually:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
 # Run tests
-pytest python/*/test_*.py -v
-pytest python/beginner/two-sum/test_two_sum.py -v
+make test-py                # Test all Python solutions (21 working tests)
+make test-py PROBLEM=two-sum # Test specific problem
+pytest python/*/test_*.py -v # If pytest available
 ```
+
+**Current Python Coverage:**
+- ✅ All 20 beginner problems implemented
+- 🚧 12 of 21 intermediate problems completed  
+- 🚧 1 of 20 advanced problems completed
+- 🔄 Work in progress to complete remaining 26 problems
 
 ## 📋 Available Problems
 
